@@ -9,8 +9,16 @@ import {
   ChevronUp,
   DollarSign,
 } from "lucide-react";
-import { ChangeEvent, ReactElement, useCallback, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import Layout from "@/components/layout";
+import { SummaryCard } from "@/components/pages/loan/summary-card";
+import { formatCurrency } from "@/shared/helpers/amount-format";
 
 interface AmortizationRow {
   paymentNumber: number;
@@ -78,13 +86,6 @@ const LoanCalculator = () => {
     }
 
     setAmortizationSchedule(schedule);
-  };
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(value);
   };
 
   const setLoanAmountValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -209,34 +210,17 @@ const LoanCalculator = () => {
                 Resumen de pago
               </h2>
               <div className="space-y-4">
-                <div className="p-4 bg-white rounded-lg shadow-sm">
-                  <p className="text-sm text-slate-600">Monto del préstamo</p>
-                  <p className="text-2xl font-semibold text-primary animate-number-change">
-                    {formatCurrency(loanAmount)}
-                  </p>
-                </div>
-                <div className="p-4 bg-white rounded-lg shadow-sm">
-                  <p className="text-sm text-slate-600">
-                    Monto de la cuota mensual.
-                  </p>
-                  <p className="text-2xl font-semibold text-green-700 animate-number-change">
-                    {formatCurrency(monthlyPayment)}
-                  </p>
-                </div>
-                <div className="p-4 bg-white rounded-lg shadow-sm">
-                  <p className="text-sm text-slate-600">
-                    Monto de interés pagado
-                  </p>
-                  <p className="text-2xl font-semibold text-primary animate-number-change">
-                    {formatCurrency(totalInterest)}
-                  </p>
-                </div>
-                <div className="p-4 bg-white rounded-lg shadow-sm">
-                  <p className="text-sm text-slate-600">Monto total a pagar</p>
-                  <p className="text-2xl font-semibold text-slate-800 animate-number-change">
-                    {formatCurrency(totalPayment)}
-                  </p>
-                </div>
+                <SummaryCard title="Monto del préstamo" amount={loanAmount} />
+                <SummaryCard
+                  title="Monto de la cuota mensual."
+                  amount={monthlyPayment}
+                  isGreen
+                />
+                <SummaryCard
+                  title="Monto de interés pagado"
+                  amount={totalInterest}
+                />
+                <SummaryCard title="Monto total a pagar" amount={totalPayment} />
               </div>
             </div>
 
@@ -310,11 +294,6 @@ const LoanCalculator = () => {
   );
 };
 
-
-LoanCalculator.getLayout = (page: ReactElement) => (
-  <Layout>
-    {page}
-  </Layout >
-)
+LoanCalculator.getLayout = (page: ReactElement) => <Layout>{page}</Layout>;
 
 export default LoanCalculator;
