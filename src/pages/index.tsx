@@ -9,8 +9,8 @@ import {
   ChevronUp,
   DollarSign,
 } from "lucide-react";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import "./globals.css";
+import { ChangeEvent, ReactElement, useCallback, useEffect, useState } from "react";
+import Layout from "@/components/layout";
 
 interface AmortizationRow {
   paymentNumber: number;
@@ -309,5 +309,12 @@ const LoanCalculator = () => {
     </div>
   );
 };
+
+
+LoanCalculator.getLayout = (page: ReactElement) => (
+  <Layout>
+    {page}
+  </Layout >
+)
 
 export default LoanCalculator;
