@@ -158,8 +158,8 @@ const LoanCalculator = () => {
                       }
                       className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
                     >
-                      <option value="monthly">Monthly</option>
-                      <option value="annual">Annual</option>
+                      <option value="monthly">Mensual</option>
+                      <option value="annual">Anual</option>
                     </select>
                   </div>
                 </div>
@@ -196,8 +196,8 @@ const LoanCalculator = () => {
                       }
                       className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
                     >
-                      <option value="months">Months</option>
-                      <option value="years">Years</option>
+                      <option value="months">Meses</option>
+                      <option value="years">Años</option>
                     </select>
                   </div>
                 </div>
