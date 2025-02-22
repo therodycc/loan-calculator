@@ -1,7 +1,11 @@
+import Layout from "@/components/layout";
+import { AmortizationTable } from "@/components/pages/loan/amortization-table";
+import { SummaryCard } from "@/components/pages/loan/summary-card";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { useLoanCalculator } from "@/hooks/calculate-loan";
 import {
   Calculator,
   CalendarDays,
@@ -16,77 +20,28 @@ import {
   useEffect,
   useState,
 } from "react";
-import Layout from "@/components/layout";
-import { SummaryCard } from "@/components/pages/loan/summary-card";
-import { formatCurrency } from "@/shared/helpers/amount-format";
-
-interface AmortizationRow {
-  paymentNumber: number;
-  payment: number;
-  principal: number;
-  interest: number;
-  remainingBalance: number;
-}
 
 const LoanCalculator = () => {
   const [loanAmount, setLoanAmount] = useState(10000);
-  const [interestRate, setInterestRate] = useState(5);
+  const [interestRate, setInterestRate] = useState(18);
   const [loanTerm, setLoanTerm] = useState(12);
-  const [monthlyPayment, setMonthlyPayment] = useState(0);
-  const [totalInterest, setTotalInterest] = useState(0);
-  const [totalPayment, setTotalPayment] = useState(0);
-  const [amortizationSchedule, setAmortizationSchedule] = useState<
-    AmortizationRow[]
-  >([]);
   const [showAmortization, setShowAmortization] = useState(true);
   const [termType, setTermType] = useState<"months" | "years">("months");
   const [interestType, setInterestType] = useState<"monthly" | "annual">(
     "annual"
   );
 
+  const {
+    amortizationSchedule,
+    calculateLoan,
+    monthlyPayment,
+    totalInterest,
+    totalPayment,
+  } = useLoanCalculator();
+
   useEffect(() => {
-    calculateLoan();
+    calculateLoan(loanAmount, interestRate, loanTerm, interestType, termType);
   }, [loanAmount, interestRate, loanTerm, termType, interestType]);
-
-  const calculateLoan = () => {
-    const principal = loanAmount;
-    // Convert interest rate to monthly if it's annual
-    const monthlyRate =
-      interestType === "annual" ? interestRate / 100 / 12 : interestRate / 100;
-    // Convert term to months if it's in years
-    const numberOfPayments = termType === "years" ? loanTerm * 12 : loanTerm;
-
-    const monthlyPaymentCalc =
-      (principal * monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) /
-      (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
-
-    const totalPaymentCalc = monthlyPaymentCalc * numberOfPayments;
-    const totalInterestCalc = totalPaymentCalc - principal;
-
-    setMonthlyPayment(monthlyPaymentCalc);
-    setTotalPayment(totalPaymentCalc);
-    setTotalInterest(totalInterestCalc);
-
-    // Calculate Calendario de amortización
-    let balance = principal;
-    const schedule: AmortizationRow[] = [];
-
-    for (let i = 1; i <= numberOfPayments; i++) {
-      const interestPayment = balance * monthlyRate;
-      const principalPayment = monthlyPaymentCalc - interestPayment;
-      balance -= principalPayment;
-
-      schedule.push({
-        paymentNumber: i,
-        payment: monthlyPaymentCalc,
-        principal: principalPayment,
-        interest: interestPayment,
-        remainingBalance: Math.max(0, balance),
-      });
-    }
-
-    setAmortizationSchedule(schedule);
-  };
 
   const setLoanAmountValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setLoanAmount(Number(e.target.value));
@@ -110,6 +65,7 @@ const LoanCalculator = () => {
                     value={[loanAmount]}
                     onValueChange={(value) => setLoanAmount(value[0])}
                     max={10000000}
+                    min={1}
                     step={1000}
                     className="py-4"
                   />
@@ -139,7 +95,8 @@ const LoanCalculator = () => {
                   <Slider
                     value={[interestRate]}
                     onValueChange={(value) => setInterestRate(value[0])}
-                    max={20}
+                    max={1000}
+                    min={1}
                     step={0.1}
                     className="py-4"
                   />
@@ -179,6 +136,7 @@ const LoanCalculator = () => {
                     value={[loanTerm]}
                     onValueChange={(value) => setLoanTerm(value[0])}
                     max={termType === "years" ? 30 : 360}
+                    min={1}
                     step={1}
                     className="py-4"
                   />
@@ -220,7 +178,10 @@ const LoanCalculator = () => {
                   title="Monto de interés pagado"
                   amount={totalInterest}
                 />
-                <SummaryCard title="Monto total a pagar" amount={totalPayment} />
+                <SummaryCard
+                  title="Monto total a pagar"
+                  amount={totalPayment}
+                />
               </div>
             </div>
 
@@ -242,49 +203,9 @@ const LoanCalculator = () => {
               </div>
 
               {showAmortization && (
-                <div className="overflow-y-auto max-h-[500px] overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead className="bg-slate-50 sticky top-0">
-                      <tr>
-                        <th className="p-3 text-left font-medium text-slate-600">
-                          #
-                        </th>
-                        <th className="p-3 text-left font-medium text-slate-600">
-                          Cuota
-                        </th>
-                        <th className="p-3 text-left font-medium text-slate-600">
-                          Restar al capital
-                        </th>
-                        <th className="p-3 text-left font-medium text-slate-600">
-                          Interés
-                        </th>
-                        <th className="p-3 text-left font-medium text-slate-600">
-                          Balance
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y">
-                      {amortizationSchedule.map((row) => (
-                        <tr
-                          key={row.paymentNumber}
-                          className="hover:bg-slate-50"
-                        >
-                          <td className="p-3">{row.paymentNumber}</td>
-                          <td className="p-3">{formatCurrency(row.payment)}</td>
-                          <td className="p-3">
-                            {formatCurrency(row.principal)}
-                          </td>
-                          <td className="p-3">
-                            {formatCurrency(row.interest)}
-                          </td>
-                          <td className="p-3">
-                            {formatCurrency(row.remainingBalance)}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                <AmortizationTable
+                  amortizationSchedule={amortizationSchedule}
+                />
               )}
             </div>
           </div>
