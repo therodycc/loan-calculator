@@ -13,7 +13,6 @@ export const AmortizationTable = ({ amortizationSchedule }: Props) => {
         <thead className="bg-slate-50 sticky top-0">
           <tr>
             <th className="p-3 text-left font-medium text-slate-600">#</th>
-            <th className="p-3 text-left font-medium text-slate-600">Cuota</th>
             <th className="p-3 text-left font-medium text-slate-600">
               Restar al capital
             </th>
@@ -29,7 +28,6 @@ export const AmortizationTable = ({ amortizationSchedule }: Props) => {
           {amortizationSchedule.map((row) => (
             <tr key={row.paymentNumber} className="hover:bg-slate-50">
               <td className="p-3">{row.paymentNumber}</td>
-              <td className="p-3">{formatCurrency(row.payment)}</td>
               <td className="p-3">{formatCurrency(row.principal)}</td>
               <td className="p-3">{formatCurrency(row.interest)}</td>
               <td className="p-3">{formatCurrency(row.remainingBalance)}</td>
