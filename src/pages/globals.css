@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@media (max-width: 450px) {
+  .amortization-table {
+    max-width: 325px;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

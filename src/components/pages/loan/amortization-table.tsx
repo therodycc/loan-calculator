@@ -8,7 +8,7 @@ interface Props {
 
 export const AmortizationTable = ({ amortizationSchedule }: Props) => {
   return (
-    <div className="overflow-y-auto max-h-[500px] overflow-x-auto">
+    <div className="overflow-y-auto max-h-[500px] overflow-x-auto w-full">
       <table className="w-full text-sm">
         <thead className="bg-slate-50 sticky top-0">
           <tr>

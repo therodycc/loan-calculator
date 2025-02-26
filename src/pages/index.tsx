@@ -41,15 +41,66 @@ const LoanCalculator = () => {
 
   useEffect(() => {
     calculateLoan(loanAmount, interestRate, loanTerm, interestType, termType);
-  }, [loanAmount, interestRate, loanTerm, termType, interestType]);
+  }, [
+    loanAmount,
+    interestRate,
+    loanTerm,
+    termType,
+    interestType,
+    calculateLoan,
+  ]);
 
   const setLoanAmountValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setLoanAmount(Number(e.target.value));
   }, []);
 
+  const setSlideLoanAmountValue = useCallback((value: number[]) => {
+    setLoanAmount(value[0]);
+  }, []);
+
+  const setInterestRateValue = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setInterestRate(Number(e.target.value));
+    },
+    []
+  );
+
+  const setSlideInterestRateValue = useCallback((value: number[]) => {
+    setInterestRate(value[0]);
+  }, []);
+
+  const setLoanTermValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setLoanTerm(Number(e.target.value));
+  }, []);
+
+  const setTermTypeSelectValue = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      setTermType(e.target.value as "months" | "years");
+    },
+    []
+  );
+
+  const setInterestTypeSelectValue = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      setInterestType(e.target.value as "monthly" | "annual");
+    },
+    []
+  );
+
+  const setSlideLoanTermValue = useCallback((value: number[]) => {
+    setLoanTerm(value[0]);
+  }, []);
+
+  const toggleAmortization = useCallback(() => {
+    setShowAmortization((prev) => !prev);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-4 sm:p-6 md:p-8">
       <div className="max-w-full mx-auto space-y-8">
+        <h1 className="text-3xl font-semibold text-slate-700">
+          Calculadora de préstamos
+        </h1>
         <Card className="p-6 sm:p-8 shadow-lg bg-white/80 backdrop-blur-sm">
           <div className="grid gap-8 lg:grid-cols-3">
             <div className="space-y-6">
@@ -63,7 +114,7 @@ const LoanCalculator = () => {
                 <div className="space-y-3">
                   <Slider
                     value={[loanAmount]}
-                    onValueChange={(value) => setLoanAmount(value[0])}
+                    onValueChange={setSlideLoanAmountValue}
                     max={10000000}
                     min={1}
                     step={1000}
@@ -94,26 +145,24 @@ const LoanCalculator = () => {
                 <div className="space-y-3">
                   <Slider
                     value={[interestRate]}
-                    onValueChange={(value) => setInterestRate(value[0])}
+                    onValueChange={setSlideInterestRateValue}
                     max={1000}
                     min={1}
                     step={0.1}
-                    className="py-4"
+                    className="py-4 w-full"
                   />
                   <div className="flex gap-2">
                     <Input
                       id="interest-rate"
                       type="number"
                       value={interestRate}
-                      onChange={(e) => setInterestRate(Number(e.target.value))}
+                      onChange={setInterestRateValue}
                       className="text-lg"
                       step="0.1"
                     />
                     <select
                       value={interestType}
-                      onChange={(e) =>
-                        setInterestType(e.target.value as "monthly" | "annual")
-                      }
+                      onChange={setInterestTypeSelectValue}
                       className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
                     >
                       <option value="monthly">Mensual</option>
@@ -134,25 +183,23 @@ const LoanCalculator = () => {
                   <Slider
                     style={{ width: "100%" }}
                     value={[loanTerm]}
-                    onValueChange={(value) => setLoanTerm(value[0])}
+                    onValueChange={setSlideLoanTermValue}
                     max={termType === "years" ? 30 : 360}
                     min={1}
                     step={1}
-                    className="py-4"
+                    className="py-4 w-full"
                   />
                   <div className="flex gap-2">
                     <Input
                       id="loan-term"
                       type="number"
                       value={loanTerm}
-                      onChange={(e) => setLoanTerm(Number(e.target.value))}
+                      onChange={setLoanTermValue}
                       className="text-lg"
                     />
                     <select
                       value={termType}
-                      onChange={(e) =>
-                        setTermType(e.target.value as "months" | "years")
-                      }
+                      onChange={setTermTypeSelectValue}
                       className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
                     >
                       <option value="months">Meses</option>
@@ -191,7 +238,7 @@ const LoanCalculator = () => {
                   Calendario de amortización
                 </h2>
                 <button
-                  onClick={() => setShowAmortization(!showAmortization)}
+                  onClick={toggleAmortization}
                   className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
                 >
                   {showAmortization ? (
@@ -201,11 +248,12 @@ const LoanCalculator = () => {
                   )}
                 </button>
               </div>
-
               {showAmortization && (
-                <AmortizationTable
-                  amortizationSchedule={amortizationSchedule}
-                />
+                <div className="w-full overflow-auto amortization-table">
+                  <AmortizationTable
+                    amortizationSchedule={amortizationSchedule}
+                  />
+                </div>
               )}
             </div>
           </div>
