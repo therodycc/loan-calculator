@@ -1,4 +1,4 @@
-import "./globals.css";
+import "@/styles/styles.css";
 import { AppPropsWithLayout } from "../interfaces/app.interface";
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {

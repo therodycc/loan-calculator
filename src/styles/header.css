@@ -1,0 +1,46 @@
+.header-section {
+    width: 100%;
+    height: auto;
+    position: relative;
+    background: #f58220;
+}
+
+
+.container-logo-img-fluid {
+    max-width: 150px;
+    height: auto;
+    border-radius: 50px 10px 50px 40px;
+    background-color: #FDF7ED;
+}
+
+.container-logo-img-fluid img {
+    border-radius: 50px 10px 50px 40px;
+}
+
+
+.sticky {
+    background-color: white;
+}
+
+.sticky h1 {
+    color: #525660 !important;
+    font-weight: 700;
+}
+
+.sticky a {
+    color: #525660 !important;
+}
+
+
+.logo-header {
+    transition: 0.6s;
+}
+
+@media only screen and (max-width: 806px) {
+    .header-options {
+        display: none;
+    }
+    .header-section {
+        height: auto;
+    }
+}

@@ -1,4 +1,5 @@
 import Layout from "@/components/layout";
+import { Header } from "@/components/layout/header";
 import { AmortizationTable } from "@/components/pages/loan/amortization-table";
 import { SummaryCard } from "@/components/pages/loan/summary-card";
 import { Card } from "@/components/ui/card";
@@ -96,170 +97,172 @@ const LoanCalculator = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-4 sm:p-6 md:p-8">
-      <div className="max-w-full mx-auto space-y-8">
-        <h1 className="text-3xl font-semibold text-slate-700">
-          Calculadora de préstamos
-        </h1>
-        <Card className="p-6 sm:p-8 shadow-lg bg-white/80 backdrop-blur-sm">
-          <div className="grid gap-8 lg:grid-cols-3">
-            <div className="space-y-6">
-              <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <DollarSign className="w-5 h-5 text-primary" />
-                  <Label htmlFor="loan-amount" className="text-lg font-medium">
-                    Monto del préstamo
-                  </Label>
-                </div>
-                <div className="space-y-3">
-                  <Slider
-                    value={[loanAmount]}
-                    onValueChange={setSlideLoanAmountValue}
-                    max={10000000}
-                    min={1}
-                    step={1000}
-                    className="py-4"
-                  />
+    <>
+      <Header />
+      <div className="container mx-auto h-full bg-gradient-to-bs from-slate-50 to-slate-100 p-4 sm:p-6 md:p-8 mt-10">
+        <div className="max-w-full mx-auto space-y-8">
+          <Card className="p-6 sm:p-8 shadow-lg bg-white/80 backdrop-blur-sm">
+            <div className="grid gap-8 lg:grid-cols-12">
+              <div className="space-y-6 lg:col-span-4">
+                <div className="space-y-4">
                   <div className="flex items-center gap-2">
-                    <Input
-                      id="loan-amount"
-                      type="number"
-                      value={loanAmount}
-                      onChange={setLoanAmountValue}
-                      className="text-lg"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <Calculator className="w-5 h-5 text-primary" />
-                  <Label
-                    htmlFor="interest-rate"
-                    className="text-lg font-medium"
-                  >
-                    Tasa %
-                  </Label>
-                </div>
-                <div className="space-y-3">
-                  <Slider
-                    value={[interestRate]}
-                    onValueChange={setSlideInterestRateValue}
-                    max={1000}
-                    min={1}
-                    step={0.1}
-                    className="py-4 w-full"
-                  />
-                  <div className="flex gap-2">
-                    <Input
-                      id="interest-rate"
-                      type="number"
-                      value={interestRate}
-                      onChange={setInterestRateValue}
-                      className="text-lg"
-                      step="0.1"
-                    />
-                    <select
-                      value={interestType}
-                      onChange={setInterestTypeSelectValue}
-                      className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                    <DollarSign className="w-5 h-5 text-primary" />
+                    <Label
+                      htmlFor="loan-amount"
+                      className="text-lg font-medium"
                     >
-                      <option value="monthly">Mensual</option>
-                      <option value="annual">Anual</option>
-                    </select>
+                      Monto del préstamo
+                    </Label>
                   </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <CalendarDays className="w-5 h-5 text-primary" />
-                  <Label htmlFor="loan-term" className="text-lg font-medium">
-                    Plazo del préstamo
-                  </Label>
-                </div>
-                <div className="space-y-3">
-                  <Slider
-                    style={{ width: "100%" }}
-                    value={[loanTerm]}
-                    onValueChange={setSlideLoanTermValue}
-                    max={termType === "years" ? 30 : 360}
-                    min={1}
-                    step={1}
-                    className="py-4 w-full"
-                  />
-                  <div className="flex gap-2">
-                    <Input
-                      id="loan-term"
-                      type="number"
-                      value={loanTerm}
-                      onChange={setLoanTermValue}
-                      className="text-lg"
+                  <div className="space-y-3">
+                    <Slider
+                      value={[loanAmount]}
+                      onValueChange={setSlideLoanAmountValue}
+                      max={10000000}
+                      min={1}
+                      step={1000}
+                      className="py-4"
                     />
-                    <select
-                      value={termType}
-                      onChange={setTermTypeSelectValue}
-                      className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                    <div className="flex items-center gap-2">
+                      <Input
+                        id="loan-amount"
+                        type="number"
+                        value={loanAmount}
+                        onChange={setLoanAmountValue}
+                        className="text-lg"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Calculator className="w-5 h-5 text-primary" />
+                    <Label
+                      htmlFor="interest-rate"
+                      className="text-lg font-medium"
                     >
-                      <option value="months">Meses</option>
-                      <option value="years">Años</option>
-                    </select>
+                      Tasa %
+                    </Label>
+                  </div>
+                  <div className="space-y-3">
+                    <Slider
+                      value={[interestRate]}
+                      onValueChange={setSlideInterestRateValue}
+                      max={1000}
+                      min={1}
+                      step={0.1}
+                      className="py-4 w-full"
+                    />
+                    <div className="flex gap-2">
+                      <Input
+                        id="interest-rate"
+                        type="number"
+                        value={interestRate}
+                        onChange={setInterestRateValue}
+                        className="text-lg"
+                        step="0.1"
+                      />
+                      <select
+                        value={interestType}
+                        onChange={setInterestTypeSelectValue}
+                        className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                      >
+                        <option value="monthly">Mensual</option>
+                        <option value="annual">Anual</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <CalendarDays className="w-5 h-5 text-primary" />
+                    <Label htmlFor="loan-term" className="text-lg font-medium">
+                      Plazo del préstamo
+                    </Label>
+                  </div>
+                  <div className="space-y-3">
+                    <Slider
+                      style={{ width: "100%" }}
+                      value={[loanTerm]}
+                      onValueChange={setSlideLoanTermValue}
+                      max={termType === "years" ? 30 : 360}
+                      min={1}
+                      step={1}
+                      className="py-4 w-full"
+                    />
+                    <div className="flex gap-2">
+                      <Input
+                        id="loan-term"
+                        type="number"
+                        value={loanTerm}
+                        onChange={setLoanTermValue}
+                        className="text-lg"
+                      />
+                      <select
+                        value={termType}
+                        onChange={setTermTypeSelectValue}
+                        className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                      >
+                        <option value="months">Meses</option>
+                        <option value="years">Años</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="bg-secondary rounded-lg p-6 space-y-6">
-              <h2 className="text-xl font-semibold text-slate-800">
-                Resumen de pago
-              </h2>
-              <div className="space-y-4">
-                <SummaryCard title="Monto del préstamo" amount={loanAmount} />
-                <SummaryCard
-                  title="Monto de la cuota mensual."
-                  amount={monthlyPayment}
-                  isGreen
-                />
-                <SummaryCard
-                  title="Monto de interés pagado"
-                  amount={totalInterest}
-                />
-                <SummaryCard
-                  title="Monto total a pagar"
-                  amount={totalPayment}
-                />
-              </div>
-            </div>
-
-            <div className="lg:col-span-1">
-              <div className="flex items-center justify-between mb-4">
+              <div className="bg-secondary rounded-lg p-6 space-y-6 lg:col-span-5">
                 <h2 className="text-xl font-semibold text-slate-800">
-                  Calendario de amortización
+                  Resumen de pago
                 </h2>
-                <button
-                  onClick={toggleAmortization}
-                  className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
-                >
-                  {showAmortization ? (
-                    <ChevronUp className="w-4 h-4" />
-                  ) : (
-                    <ChevronDown className="w-4 h-4" />
-                  )}
-                </button>
-              </div>
-              {showAmortization && (
-                <div className="w-full overflow-auto amortization-table">
-                  <AmortizationTable
-                    amortizationSchedule={amortizationSchedule}
+                <div className="space-y-4">
+                  <SummaryCard title="Monto del préstamo" amount={loanAmount} />
+                  <SummaryCard
+                    title="Monto de la cuota mensual."
+                    amount={monthlyPayment}
+                    isActive
+                  />
+                  <SummaryCard
+                    title="Monto de interés pagado"
+                    amount={totalInterest}
+                  />
+                  <SummaryCard
+                    title="Monto total a pagar"
+                    amount={totalPayment}
                   />
                 </div>
-              )}
+              </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+          <Card className="p-6 sm:p-8 shadow-lg bg-white/80 backdrop-blur-sm col-span-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold text-slate-800">
+                Calendario de amortización
+              </h2>
+              <button
+                onClick={toggleAmortization}
+                className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+              >
+                {showAmortization ? (
+                  <ChevronUp className="w-4 h-4" />
+                ) : (
+                  <ChevronDown className="w-4 h-4" />
+                )}
+              </button>
+            </div>
+            {showAmortization && (
+              <div className="w-full overflow-auto amortization-table">
+                <AmortizationTable
+                  amortizationSchedule={amortizationSchedule}
+                />
+              </div>
+            )}
+          </Card>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

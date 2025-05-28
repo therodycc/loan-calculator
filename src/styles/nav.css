@@ -1,0 +1,132 @@
+.nav-button span,
+.nav-button span:after,
+.nav-button span:before {
+    transition: all 500ms ease-in-out;
+    border-radius: 10px;
+    height: 2px;
+    width: 40px;
+    position: absolute;
+    display: block;
+    content: "";
+    background: #ffffff;
+}
+
+.sticky .nav-button span,
+.sticky .nav-button span:after,
+.sticky .nav-button span:before {
+    background: rgb(63, 63, 63) !important;
+}
+
+.nav-button span:before {
+    top: -10px;
+}
+
+.nav-button span:after {
+    bottom: -10px;
+}
+
+.nav-button.active span {
+    background-color: transparent;
+}
+
+.nav-button.active span:before,
+.nav-button.active span:after {
+    top: 0;
+}
+
+.nav-button.active span:after {
+    transform: rotate(-45deg);
+}
+
+.nav-button.active span:before {
+    transform: rotate(45deg);
+}
+
+.nav-button {
+    display: none;
+}
+
+/*  */
+
+.nav-item-responsive {
+    padding: 20px;
+    cursor: pointer;
+}
+
+.nav-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.option-header-item.active {
+    color: #f58220 !important;
+    font-weight: 700 !important;
+}
+
+.option-header-item {
+    font-family: 'Comfortaa', cursive;
+    margin-left: 20px;
+    text-decoration: none;
+    color: rgb(61, 61, 61);
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+.nav-menu {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: 0.6s;
+    padding: 40px 60px;
+    z-index: 90000;
+    background: #ffffff;
+}
+
+
+
+.title-name h1 {
+    font-size: 1.3rem;
+    color: #323232;
+    margin-bottom: -10px;
+    font-weight: 400;
+    font-weight: bold;
+}
+
+.title-name h1 span {
+    font-size: 1.3rem;
+    font-family: 'Comfortaa', cursive;
+    color: #f58220;
+    margin-left: 10px;
+    font-weight: 700;
+    font-weight: bold;
+}
+
+.option-header-item.active {
+    color: #f58220 !important;
+    font-weight: 700 !important;
+}
+
+.option-header-item {
+    font-family: 'Comfortaa', cursive;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 15px;
+    cursor: pointer;
+    color: #3b3b3b;
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 806px) {
+    .nav-options {
+        display: none;
+    }
+}
