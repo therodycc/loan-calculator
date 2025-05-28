@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Nav } from "./nav";
 
 export const Header = () => {
@@ -7,7 +8,7 @@ export const Header = () => {
       <div className="pt-[115px]"></div>
       <div className="container m-auto flex items-center max-lg:flex-col max-lg:items-start">
         <div className="container-logo-img-fluid ml-6">
-          <img src="finandy.png" className="img-fluid" alt="" />
+          <Image src="/finandy.png" width={140} height={100} className="img-fluid" alt="" />
         </div>
         <div className="text-[#FDF7ED] pl-6 py-4">
           <h2 className="text-3xl font-bold">Calculadora de Préstamos</h2>

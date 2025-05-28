@@ -13,7 +13,6 @@ class MyDocument extends Document {
                     <meta charSet="UTF-8" />
                     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                     <link rel="shortcut icon" href="/assets/images/favicon.png" type="image/png" />
-                    <link rel="stylesheet" href="./globals.css" />
                 </Head>
                 <body>
                     <Main />

@@ -1,9 +1,9 @@
 import { navOptions } from "@/settings/nav-options"
-import React from 'react'
+import React, { MouseEventHandler } from 'react'
 import { Link } from "react-scroll";
 
 interface Props {
-    handleToggle: Function
+    handleToggle: (() => void) & MouseEventHandler<HTMLButtonElement>
 }
 
 export const MenuResponsive = ({ handleToggle }: Props) => {
@@ -24,7 +24,7 @@ export const MenuResponsive = ({ handleToggle }: Props) => {
                     <Link
                         {...options}
                         key={opt.to}
-                        onClick={() => handleToggle()}
+                        onClick={handleToggle}
                         className="nav-item-responsive"
                     >
                         {title}

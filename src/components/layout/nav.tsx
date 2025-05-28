@@ -3,12 +3,10 @@ import { useCallback, useState } from "react";
 import { Link } from "react-scroll";
 import { MenuResponsive } from "./menu-responsive";
 
-interface Props {}
-
-export const Nav = ({}: Props) => {
-  const [isSticky, setIsSticky] = useState(false);
+export const Nav = () => {
+  const [isSticky] = useState(false);
   const [isMenuActive, setIsMenuActive] = useState(false);
-  const [activeSection, setActiveSection] = useState("header-section");
+  const [activeSection] = useState("header-section");
 
   const handleToggle = useCallback(() => {
     setIsMenuActive((_prev) => !_prev);

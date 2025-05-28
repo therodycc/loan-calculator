@@ -1,7 +1,7 @@
 import Layout from "@/components/layout";
 import { Header } from "@/components/layout/header";
 import { AmortizationTable } from "@/components/pages/loan/amortization-table";
-import { SummaryCard } from "@/components/pages/loan/summary-card";
+import { PaymentResume } from "@/components/pages/loan/payment-resume";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -212,27 +212,13 @@ const LoanCalculator = () => {
                   </div>
                 </div>
               </div>
-
               <div className="bg-secondary rounded-lg p-6 space-y-6 lg:col-span-5">
-                <h2 className="text-xl font-semibold text-slate-800">
-                  Resumen de pago
-                </h2>
-                <div className="space-y-4">
-                  <SummaryCard title="Monto del préstamo" amount={loanAmount} />
-                  <SummaryCard
-                    title="Monto de la cuota mensual."
-                    amount={monthlyPayment}
-                    isActive
-                  />
-                  <SummaryCard
-                    title="Monto de interés pagado"
-                    amount={totalInterest}
-                  />
-                  <SummaryCard
-                    title="Monto total a pagar"
-                    amount={totalPayment}
-                  />
-                </div>
+                <PaymentResume
+                  loanAmount={loanAmount}
+                  monthlyPayment={monthlyPayment}
+                  totalInterest={totalInterest}
+                  totalPayment={totalPayment}
+                />
               </div>
             </div>
           </Card>
