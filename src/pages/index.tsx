@@ -97,9 +97,9 @@ const LoanCalculator = () => {
   }, []);
 
   return (
-    <>
-      <Header />
-      <div className="container mx-auto h-full bg-gradient-to-bs from-slate-50 to-slate-100 p-4 sm:p-6 md:p-8 mt-10">
+    <div className="bg-secondary">
+      <div className="container mx-auto h-full p-4 sm:p-6 md:p-8">
+        <Header />
         <div className="max-w-full mx-auto space-y-8">
           <Card className="p-6 sm:p-8 shadow-lg bg-white/80 backdrop-blur-sm">
             <div className="grid gap-8 lg:grid-cols-12">
@@ -248,7 +248,7 @@ const LoanCalculator = () => {
           </Card>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

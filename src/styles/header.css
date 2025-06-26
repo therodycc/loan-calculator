@@ -2,7 +2,6 @@
     width: 100%;
     height: auto;
     position: relative;
-    background: #f58220;
 }
 
 
@@ -14,7 +13,7 @@
 }
 
 .container-logo-img-fluid img {
-    border-radius: 50px 10px 50px 40px;
+    border-radius: 1rem;
 }
 
 
